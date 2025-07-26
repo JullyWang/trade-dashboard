@@ -14,7 +14,7 @@ st.metric("Expectancy", summary["Expectancy"])
 st.metric("Max Drawdown ($)", summary["Max Drawdown ($)"])
 st.metric("Max Drawdown (%)", summary["Max Drawdown (%)"])
 st.metric("System Winrate", summary["System Winrate"])
-st.metric("Winrate", summary["Winrate"])
+st.metric("Winrate", summary["Winrate (%)"])
 
 # Donut Chart using Plotly
 import plotly.express as px
