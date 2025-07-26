@@ -25,5 +25,14 @@ fig = px.pie(names=labels, values=values, hole = 0.4, title="Win/Loss Ratio")
 st.plotly_chart(fig)
 
 # Equity Curve Chart
+
+# Convert Date to datetime and set as index
+equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
+equity_curve.set_index("Date", inplace=True)
+
+# Reindex to daily frequency and forward-fill missing values
+equity_curve = equity_curve.asfreq("D")
+equity_curve["Equity"] = equity_curve["Equity"].ffill()
+
 fig2 = px.line(equity_curve, x='Date', y='Equity', title='Equity Curve')
 st.plotly_chart(fig2)
