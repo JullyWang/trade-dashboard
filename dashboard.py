@@ -1,38 +1,51 @@
 import streamlit as st
 import pandas as pd
 import json
+import plotly.express as px
 
-# Load data
+# Load summary data
 summary = pd.read_csv("summary.csv").iloc[0]
 equity_curve = pd.DataFrame(json.loads(summary["Equity Curve (JSON)"]))
 
+# Convert numeric fields
+summary["Wins"] = int(summary["Wins"])
+summary["Losses"] = int(summary["Losses"])
+
+# Title
+st.title("📈 Trading Summary Dashboard")
+
 # Metrics
-st.title("Trading Summary Dashboard")
-st.metric("Total Equity", summary["Total Equity"])
-st.metric("Profit Factor", summary["Profit Factor"])
-st.metric("Expectancy", summary["Expectancy"])
-st.metric("Max Drawdown ($)", summary["Max Drawdown ($)"])
-st.metric("Max Drawdown (%)", summary["Max Drawdown (%)"])
-st.metric("System Winrate", summary["System Winrate"])
+col1, col2, col3 = st.columns(3)
+col1.metric("Total Equity", summary["Total Equity"])
+col2.metric("Profit Factor", summary["Profit Factor"])
+col3.metric("Expectancy", summary["Expectancy"])
+
+col4, col5, col6 = st.columns(3)
+col4.metric("Max Drawdown ($)", summary["Max Drawdown ($)"])
+col5.metric("Max Drawdown (%)", summary["Max Drawdown (%)"])
+col6.metric("System Winrate", summary.get("System Winrate", "N/A"))
+
 st.metric("Winrate", summary["Winrate (%)"])
 
-# Donut Chart using Plotly
-import plotly.express as px
-
+# --- Donut Chart ---
 labels = ['Wins', 'Losses']
 values = [summary["Wins"], summary["Losses"]]
-fig = px.pie(names=labels, values=values, hole = 0.4, title="Win/Loss Ratio")
-st.plotly_chart(fig)
+fig = px.pie(
+    names=labels, 
+    values=values, 
+    hole=0.4, 
+    title="Win/Loss Ratio"
+)
+st.plotly_chart(fig, use_container_width=True)
 
-# Equity Curve Chart
-
-# Convert Date to datetime and set as index
+# --- Smoothed Equity Curve ---
 equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
 equity_curve.set_index("Date", inplace=True)
 
-# Reindex to daily frequency and forward-fill missing values
+# Reindex and forward-fill missing dates
 equity_curve = equity_curve.asfreq("D")
 equity_curve["Equity"] = equity_curve["Equity"].ffill()
+equity_curve = equity_curve.reset_index()
 
-fig2 = px.line(equity_curve, x='Date', y='Equity', title='Equity Curve')
-st.plotly_chart(fig2)
+fig2 = px.line(equity_curve, x="Date", y="Equity", title="Equity Curve")
+st.plotly_chart(fig2, use_container_width=True)
