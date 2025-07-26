@@ -21,7 +21,7 @@ import plotly.express as px
 
 labels = ['Wins', 'Losses']
 values = [summary["Wins"], summary["Losses"]]
-fig = px.pie(names=labels, values=values, holes = 0.4, title="Win/Loss Ratio")
+fig = px.pie(names=labels, values=values, hole = 0.4, title="Win/Loss Ratio")
 st.plotly_chart(fig)
 
 # Equity Curve Chart
