@@ -39,13 +39,17 @@ fig = px.pie(
 st.plotly_chart(fig, use_container_width=True)
 
 # --- Smoothed Equity Curve ---
+# Convert to datetime and ensure unique dates
 equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
-equity_curve.set_index("Date", inplace=True)
+equity_curve = equity_curve.groupby("Date").last()  # removes duplicates
 
-# Reindex and forward-fill missing dates
+# Reindex to daily frequency and forward-fill missing values
 equity_curve = equity_curve.asfreq("D")
 equity_curve["Equity"] = equity_curve["Equity"].ffill()
+
+# Reset index for plotting
 equity_curve = equity_curve.reset_index()
 
+# Plot
 fig2 = px.line(equity_curve, x="Date", y="Equity", title="Equity Curve")
 st.plotly_chart(fig2, use_container_width=True)
