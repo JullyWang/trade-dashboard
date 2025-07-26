@@ -44,8 +44,8 @@ equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
 equity_curve = equity_curve.groupby("Date").last()  # removes duplicates
 
 # Reindex to daily frequency and forward-fill missing values
-equity_curve = equity_curve.asfreq("D")
-equity_curve["Equity"] = equity_curve["Equity"].ffill()
+#equity_curve = equity_curve.asfreq("D")
+#equity_curve["Equity"] = equity_curve["Equity"].ffill()
 
 # Reset index for plotting
 equity_curve = equity_curve.reset_index()
