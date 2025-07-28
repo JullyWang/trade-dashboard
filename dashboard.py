@@ -13,7 +13,7 @@ st.write("key:", st.secrets.get("SUPABASE_PUBLIC_KEY", "NOT FOUND"))
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
 st.write("Supabase response:", response.data)
-summary = response.data[0]
+summary = response.data[1]
 
 
 # Convert numeric fields
