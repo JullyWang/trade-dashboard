@@ -12,8 +12,17 @@ st.write("key:", st.secrets.get("SUPABASE_PUBLIC_KEY", "NOT FOUND"))
 
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
-st.write("Supabase response:", response.data)
-summary = response.data[1]
+
+# Debug: show full Supabase response
+st.write("📦 Supabase response:", response.data)
+
+# Handle case when no data is returned
+if not response.data:
+    st.error("⚠️ No summary data found in Supabase. Check your 'summary_metrics' table.")
+    st.stop()
+
+# Extract the latest row
+summary = response.data[0]
 
 
 # Convert numeric fields
