@@ -34,7 +34,7 @@ col4.metric("Max Drawdown ($)", summary["max_drawdown_$"])
 col5.metric("Max Drawdown (%)", summary["max_drawdown_%"])
 col6.metric("System Winrate", summary.get("system_winrate", "N/A"))
 
-st.metric("Winrate", summary["Winrate (%)"])
+st.metric("Winrate", summary["win_rate"])
 
 # --- Donut Chart ---
 labels = ['Wins', 'Losses']
