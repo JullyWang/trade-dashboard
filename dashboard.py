@@ -4,6 +4,12 @@ from supabase_client import supabase
 import json
 import plotly.express as px
 
+import streamlit as st
+
+st.write("🔐 Loaded secrets:")
+st.write("URL:", st.secrets.get("SUPABASE_URL", "❌ Not Found"))
+
+
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
 summary = response.data[1]
