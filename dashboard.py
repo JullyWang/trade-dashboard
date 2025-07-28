@@ -52,6 +52,7 @@ st.plotly_chart(fig, use_container_width=True)
 # --- Smoothed Equity Curve ---
 # --- Parse Equity Curve JSON ---
 equity_curve = pd.DataFrame(json.loads(summary["equity_curve"]))
+st.write("Equity Curve Columns:", equity_curve.columns.tolist())
 
 # Convert to datetime and ensure unique dates
 equity_curve["date"] = pd.to_datetime(equity_curve["date"])
