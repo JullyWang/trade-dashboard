@@ -4,11 +4,12 @@ from supabase_client import supabase
 import json
 import plotly.express as px
 
-import streamlit as st
+# -- Debug loaded secret
+#import streamlit as st
 
-st.write("🔐 Loaded secrets:")
-st.write("URL:", st.secrets.get("SUPABASE_URL", "❌ Not Found"))
-st.write("key:", st.secrets.get("SUPABASE_PUBLIC_KEY", "NOT FOUND"))
+#st.write("🔐 Loaded secrets:")
+#st.write("URL:", st.secrets.get("SUPABASE_URL", "❌ Not Found"))
+#st.write("key:", st.secrets.get("SUPABASE_PUBLIC_KEY", "NOT FOUND"))
 
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
@@ -53,7 +54,7 @@ st.plotly_chart(fig, use_container_width=True)
 equity_curve = pd.DataFrame(json.loads(summary["equity_curve"]))
 
 # Convert to datetime and ensure unique dates
-equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
+equity_curve["date"] = pd.to_datetime(equity_curve["date"])
 equity_curve = equity_curve.groupby("Date").last()  # removes duplicates
 
 # Reindex to daily frequency and forward-fill missing values
