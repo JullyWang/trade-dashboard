@@ -52,8 +52,8 @@ st.plotly_chart(fig, use_container_width=True)
 equity_curve = pd.DataFrame(json.loads(summary["equity_curve"]))
 
 # Convert to datetime and ensure unique dates
-equity_curve["date"] = pd.to_datetime(equity_curve["date"])
-equity_curve = equity_curve.groupby("date").last()  # removes duplicates
+equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
+equity_curve = equity_curve.groupby("Date").last()  # removes duplicates
 
 # Reindex to daily frequency and forward-fill missing values
 equity_curve = equity_curve.asfreq("D")
