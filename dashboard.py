@@ -1,11 +1,12 @@
 import streamlit as st
 import pandas as pd
+from supabse-client import supabase
 import json
 import plotly.express as px
 
-# Load summary data
-summary = pd.read_csv("summary.csv").iloc[0]
-equity_curve = pd.DataFrame(json.loads(summary["Equity Curve (JSON)"]))
+# --- Load latest summary from Supabase ---
+response = supabase.table("summary_metrics").select("*").order("Date", desc=True).limit(1).execute()
+summary_row = response.data[0]
 
 # Convert numeric fields
 summary["Wins"] = int(summary["Wins"])
@@ -44,8 +45,8 @@ equity_curve["Date"] = pd.to_datetime(equity_curve["Date"])
 equity_curve = equity_curve.groupby("Date").last()  # removes duplicates
 
 # Reindex to daily frequency and forward-fill missing values
-#equity_curve = equity_curve.asfreq("D")
-#equity_curve["Equity"] = equity_curve["Equity"].ffill()
+equity_curve = equity_curve.asfreq("D")
+equity_curve["Equity"] = equity_curve["Equity"].ffill()
 
 # Reset index for plotting
 equity_curve = equity_curve.reset_index()
