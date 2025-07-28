@@ -1,0 +1,32 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Environments
+.env
+.venv/
+venv/
+env/
+
+# Supabase secrets
+.streamlit/secrets.toml
+
+# Streamlit
+.streamlit/
+
+# MacOS / Windows
+.DS_Store
+Thumbs.db
+
+# Logs and temp
+*.log
+
+# Jupyter Notebooks
+.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
