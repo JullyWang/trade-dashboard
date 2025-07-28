@@ -11,7 +11,7 @@ st.write("URL:", st.secrets.get("SUPABASE_URL", "❌ Not Found"))
 st.write("key:", st.secrets.get("SUPABASE_PUBLIC_KEY", "NOT FOUND"))
 
 # --- Load latest summary from Supabase ---
-response = supabase.table("summary_metrics").select("*").order("date").limit(1).execute()
+response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
 st.write("Supabase response:", response.data)
 summary = response.data[0]
 
