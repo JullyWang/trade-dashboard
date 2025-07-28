@@ -9,6 +9,7 @@ import streamlit as st
 st.write("🔐 Loaded secrets:")
 st.write("URL:", st.secrets.get("SUPABASE_URL", "❌ Not Found"))
 
+st.write("Supabase response:", response.data)
 
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
