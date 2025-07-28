@@ -9,8 +9,8 @@ response = supabase.table("summary_metrics").select("*").order("date", desc=True
 summary = response.data[0]
 
 # Convert numeric fields
-summary["Wins"] = int(summary["wins"])
-summary["Losses"] = int(summary["losses"])
+summary["wins"] = int(summary["wins"])
+summary["losses"] = int(summary["losses"])
 
 # Title
 st.title("📈 Trading Summary Dashboard")
