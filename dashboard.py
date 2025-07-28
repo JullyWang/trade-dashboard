@@ -6,7 +6,7 @@ import plotly.express as px
 
 # --- Load latest summary from Supabase ---
 response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
-summary = response.data[0]
+summary = response.data[1]
 
 # Convert numeric fields
 summary["wins"] = int(summary["wins"])
