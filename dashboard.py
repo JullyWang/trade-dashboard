@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-from supabse-client import supabase
+from supabse_client import supabase
 import json
 import plotly.express as px
 
