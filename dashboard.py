@@ -5,7 +5,7 @@ import json
 import plotly.express as px
 
 # --- Load latest summary from Supabase ---
-response = supabase.table("summary_metrics").select("*").order("Date", desc=True).limit(1).execute()
+response = supabase.table("summary_metrics").select("*").order("date", desc=True).limit(1).execute()
 summary_row = response.data[0]
 
 # Convert numeric fields
