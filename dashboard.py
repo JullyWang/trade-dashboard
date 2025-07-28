@@ -60,7 +60,7 @@ equity_curve = equity_curve.groupby("date").last()  # removes duplicates
 
 # Reindex to daily frequency and forward-fill missing values
 equity_curve = equity_curve.asfreq("D")
-equity_curve["equity"] = equity_curve["equity"].ffill()
+equity_curve["Equity"] = equity_curve["Equity"].ffill()
 
 # Reset index for plotting
 equity_curve = equity_curve.reset_index()
